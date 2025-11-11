@@ -1,0 +1,1488 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --accent-color: #0066cc;
+            --accent-light: #e7f1ff;
+            --link-color: #0066cc;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .contact-qr {
+            margin: 1.5rem auto;
+            text-align: center;
+        }
+
+        .contact-qr img {
+            width: 140px;
+            height: auto;
+        }
+
+        .contact-qr-caption {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-years {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .work-preference {
+            font-size: 0.95rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        .contact-compact {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .contact-compact a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        .contact-compact a:hover {
+            text-decoration: underline;
+        }
+
+        .controls {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 1000;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            min-height: 44px;
+        }
+
+        .btn:hover {
+            background: var(--border-color);
+            transform: translateY(-1px);
+        }
+
+        .cv-layout {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .main-content {
+            min-width: 0;
+        }
+
+        .sidebar {
+            min-width: 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        #leadership-highlights {
+            margin-bottom: 2.5rem;
+        }
+
+        #leadership-highlights ul {
+            margin-left: 1.5rem;
+        }
+
+        #leadership-highlights li {
+            margin-bottom: 0.85rem;
+            line-height: 1.8;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            max-width: 75ch;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .value-statement {
+            font-size: 1.125rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .key-achievements {
+            background: var(--accent-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+        }
+
+        .key-achievements h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .key-achievements ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .key-achievements li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .key-achievements li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .project {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .project h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .project p {
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+
+        .job {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .job:last-child {
+            border-bottom: none;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .job-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .job-period {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .job-company {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .job ul {
+            margin-top: 0.75rem;
+        }
+
+        .job-tech {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .job-tech strong {
+            color: var(--text-primary);
+        }
+
+        .skills-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            padding: 1.25rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .skill-category h4 {
+            margin-bottom: 0.75rem;
+            color: var(--accent-color);
+        }
+
+        .skill-tags {
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .sidebar-section {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .contact-value {
+            color: var(--link-color);
+            user-select: all;
+            word-break: break-all;
+            font-size: 0.95rem;
+        }
+
+        .contact-link {
+            color: var(--link-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .sidebar-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-pill {
+            background: var(--bg-tertiary);
+            padding: 0.375rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .languages-list p {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .interests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .interest-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .interest-item strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .interest-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        @media (min-width: 1024px) {
+            .cv-layout {
+                grid-template-columns: 1fr 320px;
+            }
+
+            .sidebar {
+                position: sticky;
+                top: 2rem;
+                height: fit-content;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 0.8cm 1cm;
+            }
+
+            body {
+                background: white !important;
+                color: #000 !important;
+                font-size: 9.5pt;
+                line-height: 1.35;
+                font-family: 'Helvetica', 'Arial', sans-serif;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                box-sizing: border-box;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .controls {
+                display: none !important;
+            }
+
+            /* Hide interests section in PDF */
+            .interests-section {
+                display: none !important;
+            }
+
+            header {
+                padding: 0 0 0.2rem !important;
+                margin: 0 0 0.4rem 0 !important;
+                border-bottom: 1.5pt solid #333;
+                text-align: center;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+            }
+
+            .contact-qr {
+                margin: 0.2rem auto 0.3rem !important;
+            }
+
+            .contact-qr img {
+                width: 2.5cm !important;
+            }
+
+            .contact-qr-caption {
+                font-size: 6.5pt !important;
+                color: #000 !important;
+                margin-top: 0.15rem !important;
+            }
+
+            h1 {
+                font-size: 18pt;
+                margin: 0 0 0.1rem 0 !important;
+                padding: 0 !important;
+                color: #000 !important;
+                font-weight: 700;
+            }
+
+            .subtitle {
+                font-size: 10pt;
+                color: #333 !important;
+                margin: 0.1rem 0 0 0 !important;
+                padding: 0 !important;
+            }
+
+            .experience-years {
+                font-size: 8.5pt;
+                color: #666 !important;
+                margin: 0.1rem 0 0 0 !important;
+                padding: 0 !important;
+            }
+
+            .work-preference {
+                font-size: 8pt;
+                color: #333 !important;
+                font-weight: 500;
+                margin: 0.05rem 0 0 0 !important;
+                padding: 0 !important;
+            }
+
+            .contact-compact {
+                font-size: 7.5pt !important;
+                color: #000 !important;
+                margin: 0.15rem 0 0 0 !important;
+            }
+
+            .contact-compact a {
+                color: #000 !important;
+                text-decoration: none !important;
+            }
+
+            .cv-layout {
+                display: block !important;
+                width: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+                page-break-before: avoid !important;
+                page-break-inside: auto !important;
+                overflow: hidden;
+            }
+
+            .main-content {
+                float: left;
+                width: 63%;
+                margin: 0 !important;
+                padding: 0 1.5% 0 0 !important;
+            }
+
+            .sidebar {
+                float: right;
+                width: 35%;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            section {
+                page-break-inside: auto;
+                margin: 0 0 0.4rem 0 !important;
+                padding: 0 !important;
+                clear: none !important;
+            }
+
+            section:first-child {
+                margin-top: 0 !important;
+            }
+
+            #value-statement {
+                page-break-inside: auto !important;
+                margin: 0 0 0.4rem 0 !important;
+            }
+
+            .value-statement {
+                background: #f8f8f8 !important;
+                border-left: 2.5pt solid #333 !important;
+                padding: 0.3rem !important;
+                font-size: 8.5pt;
+                margin: 0 0 0.4rem 0 !important;
+                line-height: 1.4;
+                border-radius: 0;
+                page-break-inside: auto !important;
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
+            }
+
+            h2 {
+                font-size: 10pt;
+                font-weight: 700;
+                color: #000 !important;
+                border-bottom: 1pt solid #333 !important;
+                margin: 0 0 0.3rem 0 !important;
+                padding: 0 0 0.15rem 0 !important;
+                text-transform: uppercase;
+                letter-spacing: 0.5pt;
+                page-break-after: avoid !important;
+            }
+
+            h3 {
+                font-size: 9.5pt;
+                margin: 0 0 0.2rem 0 !important;
+                padding: 0 !important;
+                font-weight: 600;
+                color: #000 !important;
+            }
+
+            h4 {
+                font-size: 8.5pt;
+                margin: 0 0 0.15rem 0 !important;
+                padding: 0 !important;
+                font-weight: 600;
+                color: #000 !important;
+            }
+
+            p {
+                font-size: 9pt;
+                line-height: 1.35;
+                margin: 0 0 0.2rem 0 !important;
+                padding: 0 !important;
+                color: #000 !important;
+                max-width: none;
+            }
+
+            li {
+                font-size: 8.5pt;
+                line-height: 1.4;
+                margin: 0 0 0.15rem 0 !important;
+                padding: 0 !important;
+                color: #000 !important;
+            }
+
+            ul {
+                margin: 0 0 0.3rem 0.9rem !important;
+                padding: 0;
+            }
+
+            .value-statement {
+                background: #f8f8f8 !important;
+                border-left: 2.5pt solid #333 !important;
+                padding: 0.35rem !important;
+                font-size: 8.5pt;
+                margin: 0 0 0.6rem 0 !important;
+                line-height: 1.4;
+                border-radius: 0;
+                page-break-inside: auto !important;
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
+            }
+
+            .key-achievements {
+                background: #f4f4f4 !important;
+                padding: 0.3rem 0.4rem !important;
+                margin: 0 0 0.4rem 0 !important;
+                border-radius: 0;
+                border: 0.5pt solid #ddd !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
+            }
+
+            .key-achievements h3 {
+                color: #000 !important;
+                font-size: 9pt;
+                margin-bottom: 0.25rem;
+                font-weight: 700;
+            }
+
+            .key-achievements ul {
+                margin-bottom: 0;
+                margin-left: 0.8rem;
+            }
+
+            .key-achievements li {
+                margin-bottom: 0.15rem;
+                font-size: 8pt;
+                line-height: 1.3;
+            }
+
+            .key-achievements li::before {
+                content: "✓ ";
+                color: #000 !important;
+                font-weight: bold;
+            }
+
+            .project {
+                margin-bottom: 0.3rem !important;
+                padding-bottom: 0.3rem !important;
+                border-bottom: 0.5pt solid #ddd !important;
+                page-break-inside: avoid !important;
+            }
+
+            .project:last-child {
+                border-bottom: none !important;
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .project h4 {
+                color: #000 !important;
+                font-size: 8.5pt !important;
+                margin-bottom: 0.1rem !important;
+                font-weight: 600 !important;
+            }
+
+            .project p {
+                font-size: 8pt !important;
+                line-height: 1.35 !important;
+                margin-bottom: 0 !important;
+            }
+
+            #notable-projects {
+                margin-bottom: 0.4rem !important;
+            }
+
+            .job {
+                margin: 0 0 0.5rem 0 !important;
+                padding: 0 0 0.3rem 0 !important;
+                border-bottom: 0.5pt solid #ddd;
+                page-break-inside: avoid;
+            }
+
+            .job:last-child {
+                border-bottom: none;
+            }
+
+            .job-header {
+                margin: 0 0 0.1rem 0 !important;
+                padding: 0 !important;
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+            }
+
+            .job-title {
+                font-size: 9.5pt;
+                font-weight: 600;
+                color: #000 !important;
+            }
+
+            .job-period {
+                font-size: 8pt;
+                color: #555 !important;
+                font-weight: normal;
+            }
+
+            .job-company {
+                font-size: 8.5pt;
+                margin-bottom: 0.2rem;
+                color: #555 !important;
+                font-style: italic;
+            }
+
+            .job ul {
+                margin-top: 0.2rem;
+            }
+
+            .job-tech {
+                font-size: 7.5pt;
+                margin-top: 0.25rem;
+                color: #555 !important;
+                line-height: 1.3;
+            }
+
+            .job-tech strong {
+                color: #000 !important;
+                font-weight: 600;
+            }
+
+            .skills-grid {
+                gap: 0.4rem;
+            }
+
+            .skill-category {
+                background: #f8f8f8 !important;
+                padding: 0.35rem;
+                margin-bottom: 0.3rem;
+                border-radius: 0;
+                border-left: 1.5pt solid #333 !important;
+                page-break-inside: avoid;
+            }
+
+            .skill-category h4 {
+                color: #000 !important;
+                margin-bottom: 0.2rem;
+                font-size: 8.5pt;
+                font-weight: 600;
+            }
+
+            .skill-tags {
+                font-size: 7.5pt;
+                line-height: 1.35;
+                color: #000 !important;
+            }
+
+            /* Sidebar Styling */
+            .sidebar-section {
+                background: #fafafa !important;
+                padding: 0.35rem;
+                margin-bottom: 0.45rem;
+                border-radius: 0;
+                page-break-inside: avoid;
+                border: 0.5pt solid #ddd !important;
+            }
+
+            .sidebar-section h3 {
+                font-size: 8.5pt;
+                color: #000 !important;
+                border-bottom: 0.5pt solid #333 !important;
+                padding-bottom: 0.15rem;
+                margin-bottom: 0.3rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.3pt;
+            }
+
+            .contact-item {
+                margin-bottom: 0.3rem;
+            }
+
+            .contact-label {
+                font-size: 6.5pt;
+                color: #555 !important;
+                text-transform: uppercase;
+                letter-spacing: 0.3pt;
+                font-weight: 600;
+            }
+
+            .contact-value,
+            .contact-link {
+                font-size: 7.5pt;
+                color: #000 !important;
+                word-break: break-word;
+                line-height: 1.2;
+            }
+
+            .sidebar-skills {
+                gap: 0.15rem;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .skill-pill {
+                background: #e8e8e8 !important;
+                padding: 0.1rem 0.25rem;
+                font-size: 6.5pt;
+                color: #000 !important;
+                border-radius: 2pt;
+                border: 0.25pt solid #ccc !important;
+            }
+
+            .languages-list p {
+                font-size: 7.5pt;
+                margin-bottom: 0.25rem;
+                line-height: 1.3;
+                color: #000 !important;
+            }
+
+            .languages-list strong {
+                font-size: 7.5pt;
+                font-weight: 600;
+                color: #000 !important;
+            }
+
+            a {
+                color: #000 !important;
+                text-decoration: none !important;
+            }
+
+            br {
+                line-height: 1.2;
+            }
+
+            /* Ensure proper page breaks */
+            .main-content > section:first-child,
+            .key-achievements {
+                page-break-after: avoid;
+            }
+
+            #experience {
+                page-break-before: avoid;
+            }
+        }
+
+        /* Tablet & Mobile Adaptive Design */
+        @media (max-width: 1279px) {
+            .container {
+                max-width: 1024px;
+            }
+
+            .cv-layout {
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .container {
+                max-width: 100%;
+                padding: 1.5rem;
+            }
+
+            .cv-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .sidebar {
+                order: -1;
+            }
+
+            header {
+                padding: 1.5rem 0 2.5rem;
+                margin-bottom: 2.5rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-qr img {
+                width: 160px;
+            }
+
+            .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .experience-years {
+                font-size: 1.05rem;
+            }
+
+            .work-preference {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            h3 {
+                font-size: 1.3rem;
+            }
+
+            h4 {
+                font-size: 1.15rem;
+            }
+
+            p, li {
+                font-size: 1.05rem;
+            }
+
+            .value-statement {
+                font-size: 1.15rem;
+            }
+
+            .job-title {
+                font-size: 1.35rem;
+            }
+
+            .job-company {
+                font-size: 1.05rem;
+            }
+
+            .job-tech {
+                font-size: 0.95rem;
+            }
+
+            .skill-tags {
+                font-size: 1.05rem;
+            }
+
+            .contact-value, .contact-link {
+                font-size: 1rem;
+            }
+
+            .skill-pill {
+                font-size: 0.95rem;
+            }
+
+            section {
+                margin-bottom: 2.5rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.25rem;
+            }
+
+            header {
+                padding: 1.25rem 0 2rem;
+                margin-bottom: 2rem;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .experience-years {
+                font-size: 1rem;
+            }
+
+            .work-preference {
+                font-size: 0.95rem;
+            }
+
+            .controls {
+                position: static;
+                justify-content: center;
+                margin-bottom: 1rem;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 0.625rem 1.25rem;
+            }
+
+            h2 {
+                font-size: 1.65rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+            }
+
+            h4 {
+                font-size: 1.1rem;
+            }
+
+            p, li {
+                font-size: 1rem;
+            }
+
+            .value-statement {
+                font-size: 1.1rem;
+                padding: 1.5rem;
+                line-height: 1.7;
+            }
+
+            .key-achievements {
+                padding: 1.25rem;
+            }
+
+            .key-achievements li {
+                font-size: 1rem;
+            }
+
+            .job-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .job-title {
+                font-size: 1.3rem;
+            }
+
+            .job-company {
+                font-size: 1rem;
+            }
+
+            .job-tech {
+                font-size: 0.95rem;
+            }
+
+            .job {
+                margin-bottom: 2rem;
+            }
+
+            section {
+                margin-bottom: 2rem;
+            }
+
+            .sidebar-section {
+                padding: 1.25rem;
+            }
+
+            .contact-value, .contact-link {
+                font-size: 1rem;
+            }
+
+            .skill-pill {
+                font-size: 0.9rem;
+            }
+
+            .skill-tags {
+                font-size: 1rem;
+            }
+
+            .languages-list p {
+                font-size: 1rem;
+            }
+
+            .interest-item strong {
+                font-size: 1rem;
+            }
+
+            .interest-item p {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 1rem 0 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.15rem;
+            }
+
+            .experience-years {
+                font-size: 1rem;
+            }
+
+            .work-preference {
+                font-size: 0.95rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            h4 {
+                font-size: 1.05rem;
+            }
+
+            .btn {
+                font-size: 0.95rem;
+                padding: 0.625rem 1rem;
+                min-height: 44px;
+            }
+
+            p, li {
+                font-size: 1rem;
+            }
+
+            .value-statement {
+                font-size: 1.05rem;
+                padding: 1.25rem;
+            }
+
+            .key-achievements {
+                padding: 1rem;
+            }
+
+            .key-achievements h3 {
+                font-size: 1.1rem;
+            }
+
+            .key-achievements li {
+                font-size: 1rem;
+            }
+
+            .job {
+                margin-bottom: 1.75rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .job-title {
+                font-size: 1.2rem;
+            }
+
+            .job-company {
+                font-size: 1rem;
+            }
+
+            .job-tech {
+                font-size: 0.9rem;
+            }
+
+            section {
+                margin-bottom: 1.75rem;
+            }
+
+            .skill-category {
+                padding: 1rem;
+            }
+
+            .skill-tags {
+                font-size: 1rem;
+            }
+
+            .sidebar-section {
+                padding: 1rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .contact-value, .contact-link {
+                font-size: 1rem;
+            }
+
+            .skill-pill {
+                font-size: 0.85rem;
+                padding: 0.35rem 0.7rem;
+            }
+
+            .languages-list p {
+                font-size: 1rem;
+            }
+
+            .interest-item strong {
+                font-size: 0.95rem;
+            }
+
+            .interest-item p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ========================================
+           COMPACT MODE STYLES (for short.html)
+           ======================================== */
+        
+        .cv-compact .container {
+            max-width: 210mm;
+            padding: 1.2cm;
+        }
+
+        .cv-compact header {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+        }
+
+        .cv-compact .header-content {
+            gap: 1rem;
+        }
+
+        .cv-compact .contact-qr img {
+            width: 90px;
+        }
+
+        .cv-compact .contact-qr-caption {
+            font-size: 7pt;
+        }
+
+        .cv-compact h1 {
+            font-size: 18pt;
+            margin-bottom: 0.15rem;
+        }
+
+        .cv-compact .subtitle {
+            font-size: 10pt;
+            margin-bottom: 0.1rem;
+        }
+
+        .cv-compact .experience-years,
+        .cv-compact .work-preference {
+            font-size: 9pt;
+        }
+
+        .cv-compact .summary,
+        .cv-compact .value-statement {
+            font-size: 9.5pt;
+            line-height: 1.4;
+            padding: 0.6rem 0.8rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .cv-compact section {
+            margin-bottom: 0.7rem;
+        }
+
+        .cv-compact h2 {
+            font-size: 11pt;
+            margin-bottom: 0.35rem;
+            padding-bottom: 0.15rem;
+        }
+
+        .cv-compact h3 {
+            font-size: 9.5pt;
+            margin-bottom: 0.2rem;
+        }
+
+        .cv-compact .key-achievements {
+            padding: 0.5rem 0.7rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .cv-compact .key-achievements h3 {
+            font-size: 9.5pt;
+            margin-bottom: 0.3rem;
+        }
+
+        .cv-compact .key-achievements li {
+            font-size: 9pt;
+            margin-bottom: 0.2rem;
+            line-height: 1.3;
+        }
+
+        .cv-compact .job {
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .cv-compact .job-title {
+            font-size: 10pt;
+        }
+
+        .cv-compact .job-period {
+            font-size: 8.5pt;
+        }
+
+        .cv-compact .job-company {
+            font-size: 9pt;
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-compact .job ul {
+            margin-top: 0.2rem;
+            margin-left: 1rem;
+        }
+
+        .cv-compact .job li {
+            font-size: 9pt;
+            line-height: 1.35;
+            margin-bottom: 0.2rem;
+        }
+
+        .cv-compact .job-tech {
+            font-size: 8pt;
+            margin-top: 0.25rem;
+        }
+
+        .cv-compact .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem;
+        }
+
+        .cv-compact .skill-category {
+            padding: 0.5rem;
+        }
+
+        .cv-compact .skill-category h4 {
+            font-size: 9pt;
+            margin-bottom: 0.2rem;
+        }
+
+        .cv-compact .skill-tags {
+            font-size: 8.5pt;
+            line-height: 1.3;
+        }
+
+        .cv-compact .old-experience {
+            font-size: 9pt;
+            line-height: 1.35;
+            margin-left: 1rem;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .cv-compact .education p {
+            font-size: 9pt;
+        }
+
+        /* Hide sidebar and interests for compact version */
+        .cv-compact .sidebar,
+        .cv-compact .interests-section {
+            display: none;
+        }
+
+        /* Compact mode print styles */
+        @media print {
+            .cv-compact .container {
+                padding: 0;
+            }
+
+            .cv-compact header {
+                margin-bottom: 0.5cm;
+                padding-bottom: 0.3cm;
+            }
+
+            .cv-compact .header-content {
+                gap: 0.6cm;
+            }
+
+            .cv-compact .contact-qr img {
+                width: 2.5cm;
+            }
+
+            .cv-compact h1 {
+                font-size: 18pt;
+            }
+
+            .cv-compact .subtitle {
+                font-size: 9.5pt;
+            }
+
+            .cv-compact section {
+                margin-bottom: 0.5cm;
+            }
+
+            .cv-compact .job {
+                margin-bottom: 0.4cm;
+                padding-bottom: 0.3cm;
+            }
+        }
+
+        /* Compact mode tablet/mobile */
+        @media (max-width: 768px) {
+            .cv-compact .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========================================
+           END COMPACT MODE STYLES
+           ======================================== */
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.875rem;
+            }
+
+            header {
+                padding: 0.875rem 0 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+
+            h1 {
+                font-size: 1.85rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .value-statement {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+
+            .key-achievements {
+                padding: 0.875rem;
+            }
+
+            p, li {
+                font-size: 0.95rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .job-tech {
+                font-size: 0.85rem;
+            }
+
+            .skill-tags {
+                font-size: 0.95rem;
+            }
+        }
