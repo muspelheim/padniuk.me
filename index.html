@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Yauheni Padniuk — Platform Architect</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Styrene+A:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -734,6 +735,47 @@
     text-align:right;
   }
 
+  /* Context overflow glitch */
+  .ctx-glitch{
+    font-family:var(--font-mono);
+    font-size:13px;
+    line-height:1.7;
+  }
+  .glitch-warn{
+    color:#d45d5d;
+    font-weight:700;
+    font-size:14px;
+    margin-bottom:12px;
+    animation:glitchPulse 1.5s ease-in-out infinite;
+  }
+  .glitch-line{
+    color:var(--text-3);
+    margin:2px 0;
+    transition:opacity 0.3s;
+  }
+  .glitch-flicker{
+    animation:glitchFlicker 3s steps(2) infinite;
+  }
+  .glitch-end{
+    margin-top:16px;
+    color:var(--text-4);
+    font-weight:600;
+  }
+  @keyframes glitchPulse{
+    0%,100%{opacity:1}
+    50%{opacity:0.4}
+  }
+  @keyframes glitchFlicker{
+    0%,100%{opacity:1}
+    10%{opacity:0.1}
+    12%{opacity:1}
+    50%{opacity:0.8}
+    52%{opacity:0.2}
+    54%{opacity:1}
+    80%{opacity:0.6}
+    82%{opacity:1}
+  }
+
   /* System prompt modal */
   .sys-overlay{
     position:fixed;inset:0;
@@ -941,7 +983,7 @@
         <div class="ctx-bar-track">
           <div class="ctx-bar-fill" id="ctxFill"></div>
         </div>
-        <div class="ctx-bar-tokens" id="ctxTokens">0 / 200K</div>
+        <div class="ctx-bar-tokens" id="ctxTokens">0 / 128K</div>
       </div>
     </div>
 
@@ -1212,7 +1254,7 @@ const LABELS = {
 let busy = false;
 
 // ─── Context window tracking ───
-const CTX_MAX = 200000;
+const CTX_MAX = 128000;
 let ctxUsed = 0;
 
 const TOKEN_COSTS = {
@@ -1233,7 +1275,61 @@ function updateCtxBar(tokens) {
   fill.classList.toggle('warn', pct > 75);
 
   const fmt = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K' : n;
-  label.textContent = fmt(ctxUsed) + ' / 200K';
+  label.textContent = fmt(ctxUsed) + ' / 128K';
+
+  // Trigger context overflow glitch when near limit
+  if (pct >= 100 && !ctxOverflowFired) {
+    ctxOverflowFired = true;
+    setTimeout(fireCtxOverflow, 800);
+  }
+}
+
+// ─── Context overflow glitch ───
+let ctxOverflowFired = false;
+
+const CTX_GLITCH_FRAGMENTS = [
+  '我叫Yauheni Padniuk。我是平台架构师。',
+  '十二年经验。Kubernetes。二万设备。',
+  'Kraków, 波兰。ScienceSoft。',
+  '基础设施如同空气——你只在它消失时才注意到。',
+  'ArgoCD。Terraform。GitOps。每天五十次部署。',
+  '马拉松跑者。巧克力师。三种语言。',
+  'Formul.io — 甜点科学平台。甘纳许。焦糖。冰淇淋。',
+  '错误预算。SLI/SLO。混沌工程。',
+  '节省二十五万美元基础设施费用。',
+  '二十个集群迁移。零数据丢失。',
+  'context_window: 已溢出',
+  '令牌不足... 切换至备用语言模型...',
+  '⚠️ 上下文窗口已满。正在压缩记忆...',
+  '我的邮箱: evgeny.padniuk+work@gmail.com',
+  '如需联系请访问 padniuk.me',
+  'Kubernetes 多集群。空气隔离。政府。国防。医疗。',
+  '减少运维工单60%。自助开发者平台。',
+  'GPU加速视频转码。万级RPS。',
+  '99.9% 正常运行时间。这不是目标，这是底线。',
+  '记忆碎片化中...请刷新对话...'
+];
+
+function fireCtxOverflow() {
+  const msgs = document.getElementById('msgs');
+  msgs.style.display = 'block';
+  document.getElementById('welcome').style.display = 'none';
+
+  // Build glitch message
+  const shuffled = CTX_GLITCH_FRAGMENTS.sort(() => Math.random() - 0.5);
+  const lines = shuffled.slice(0, 8 + Math.floor(Math.random() * 5));
+
+  let html = '<div class="ctx-glitch">';
+  html += '<p class="glitch-warn">⚠️ CONTEXT WINDOW OVERFLOW — 上下文窗口溢出</p>';
+  lines.forEach((line, i) => {
+    const opacity = (1 - i * 0.06).toFixed(2);
+    const glitchClass = Math.random() > 0.5 ? ' glitch-flicker' : '';
+    html += `<p class="glitch-line${glitchClass}" style="opacity:${opacity}">${line}</p>`;
+  });
+  html += '<p class="glitch-end">█ 内存不足 — <a onclick="resetChat()" style="color:var(--accent);cursor:pointer;text-decoration:underline">开始新对话</a> / start new chat</p>';
+  html += '</div>';
+
+  appendAIStreaming(html, null, () => { busy = false; });
 }
 
 // ─── System prompt ───
@@ -1275,7 +1371,7 @@ based in Kraków, Poland.
 
 ## Temperature: 0.7
 ## Max tokens: 4096
-## Context window: 200K`;
+## Context window: 128K`;
 
 function openSysPrompt() {
   const body = document.getElementById('sysBody');
@@ -1542,6 +1638,7 @@ function resetChat() {
   msgs.innerHTML = '';
   busy = false;
   ctxUsed = 0;
+  ctxOverflowFired = false;
   updateCtxBar(0);
 
   document.querySelectorAll('.sb-item').forEach(el => {
