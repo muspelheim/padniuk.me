@@ -1184,7 +1184,7 @@ const DATA = {
         </div>
         <div class="contact-row">
           <span class="c-icon">🐙</span>
-          <div><div class="c-label">GitHub</div><a href="https://github.com/yauheni-padniuk" class="c-value" style="text-decoration:none;color:var(--text-3)">github.com/yauheni-padniuk</a></div>
+          <div><div class="c-label">GitHub</div><a href="https://github.com/muspelheim" class="c-value" style="text-decoration:none;color:var(--text-3)">github.com/muspelheim</a></div>
         </div>
       </div>
 
@@ -1356,7 +1356,7 @@ function streamHTML(container, html, follows, callback) {
           node.style.opacity = '1';
           node.style.transform = 'translateY(0)';
         });
-        setTimeout(processNextNode, 150);
+        setTimeout(processNextNode, 30);
       } else if (node.nodeType === 3 && node.textContent.trim()) {
         // Bare text node
         container.appendChild(cursor);
@@ -1404,13 +1404,13 @@ function streamText(parent, html, cursor, callback) {
     // It's text — stream char by char
     if (charIdx < seg.length) {
       // Add a few chars at a time for speed
-      const chunk = Math.min(3, seg.length - charIdx);
+      const chunk = Math.min(18, seg.length - charIdx);
       built += seg.slice(charIdx, charIdx + chunk);
       charIdx += chunk;
       parent.innerHTML = built;
       parent.appendChild(cursor);
       scrollDown();
-      setTimeout(tick, 12 + Math.random() * 18);
+      setTimeout(tick, 2 + Math.random() * 3);
     } else {
       charIdx = 0;
       segIdx++;
@@ -1431,11 +1431,11 @@ function streamTextNode(parent, text, cursor, callback) {
       if (callback) callback();
       return;
     }
-    const chunk = Math.min(3, text.length - i);
+    const chunk = Math.min(18, text.length - i);
     span.textContent += text.slice(i, i + chunk);
     i += chunk;
     scrollDown();
-    setTimeout(tick, 12 + Math.random() * 18);
+    setTimeout(tick, 2 + Math.random() * 3);
   }
   tick();
 }
