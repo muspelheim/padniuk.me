@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yauheni Padniuk - CV</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="controls">
+        <button class="btn" id="printBtn">Export PDF</button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Yauheni Padniuk</h1>
+            <div class="subtitle">Platform Architect · Platform Engineering Lead · SRE/DevOps</div>
+            <div class="experience-years">12+ years building reliable, scalable infrastructure | Krakow, Poland</div>
+            <div class="work-preference">Remote · Hybrid · UTC+2</div>
+        </header>
+
+        <div class="cv-layout">
+            <div class="main-content">
+                <section id="value-statement">
+                    <div class="value-statement">
+                        Platform Architect with 12+ years of experience designing cloud-native and edge-ready platforms that balance scalability, security, and developer velocity. 
+                        Proven success leading architecture for multi-cluster Kubernetes systems serving 20K+ edge devices with 99.9% uptime. 
+                        Expert in GitOps, observability, and infrastructure automation. Collaborates across product, security, and operations to align platform evolution with business strategy.
+                        Focused on building adaptive, business-aligned platforms that reduce costs, accelerate delivery, and ensure reliability at scale.
+                    </div>
+                </section>
+
+                <section id="leadership-highlights">
+                    <h2>Leadership & Architecture Highlights</h2>
+                    <ul>
+                        <li>
+                            Architected multi-cluster Kubernetes platform supporting 50+ microservices and 20K+ edge devices with 99.9% uptime-establishing 
+                            company-wide standards for reliability, IaC, and developer experience
+                        </li>
+                        <li>
+                            Involved in the architectural design and PoC of air-gapped and hybrid Kubernetes solutions for regulated industries 
+                            (government, defense, healthcare), contributing to $2M+ in new business opportunities
+                        </li>
+                        <li>
+                            Reduced mean time to recovery (MTTR) by 80% by defining the SRE roadmap and standardizing observability practices
+                        </li>
+                        <li>
+                            Cut infrastructure costs by 20% ($250K+ annually) through right-sizing, autoscaling with Karpenter, and Spot instance adoption
+                        </li>
+                        <li>
+                            Built a self-service developer platform that reduced operational tickets by 60% and accelerated delivery via automated provisioning
+                        </li>
+                        <li>
+                            Mentored 10+ engineers and influenced strategic architectural decisions through design reviews and platform vision alignment
+                        </li>
+                    </ul>
+                </section>
+
+                <section id="notable-projects">
+                    <h2>Notable Projects & Initiatives</h2>
+                    <div class="project">
+                        <h4>Disaster Recovery & Data Resilience Initiative (2024-Present)</h4>
+                        <p>
+                            Designed and implemented comprehensive disaster recovery strategy for 5 critical data stores (PostgreSQL, Redis, Kafka, Elasticsearch, S3) 
+                            with RPO <30min and RTO <2h, enabling business continuity for production IoT platform.
+                        </p>
+                    </div>
+                    <div class="project">
+                        <h4>Multi-Cluster Migration Project (2022-2023)</h4>
+                        <p>
+                            Architected and executed migration of 20+ customer clusters from legacy infrastructure to modern Kubernetes platform. 
+                            Designed comprehensive testing strategy, runbooks, and rollback procedures ensuring 100% successful migrations and data consistency.
+                        </p>
+                    </div>
+                    <div class="project">
+                        <h4>Infrastructure Load Testing Framework (2021-2022)</h4>
+                        <p>
+                            Designed and implemented automated load testing framework supporting both performance 
+                            benchmarking (10,000+ RPS) and chaos engineering (fuzzy testing). 
+                            Framework validated platform scalability and identified bottlenecks before production impact.
+                        </p>
+                    </div>
+                    <div class="project">
+                        <h4>High-Load Live Media Streaming Platform (2019-2021)</h4>
+                        <p>
+                            Led cross-functional team of 12 engineers (backend, frontend, DevOps) as Solution Architect and Team Lead, 
+                            designing real-time media platform handling 10,000+ RPS with GPU-accelerated live video transcoding. 
+                            Engineered secure content transition architecture (private VPC -> DMZ) and implemented 
+                            content consistency verification algorithms ensuring data integrity across distributed storage.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="experience">
+                    <h2>Experience</h2>
+                    
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">Platform Architect / SRE Tech Lead</div>
+                            <div class="job-period">2021-Present</div>
+                        </div>
+                        <div class="job-company">ScienceSoft</div>
+                        <ul>
+                            <li>Led architecture and evolution of multi-cluster Kubernetes platform serving 20K+ edge devices in IoT industry (10,000+ RPS, 200+ microservices, 99.9% uptime) with SOC2 and GDPR compliance</li>
+                            <li>Implemented GitOps workflows with ArgoCD and Policy as Code governance, increasing deployment frequency from weekly to 50+ deploys/day while reducing deployment failures</li>
+                            <li>Designed air-gapped Kubernetes architecture and hybrid cloud solutions for regulated industries (government, defense, healthcare), enabling $2M+ in qualified sales pipeline through secure offline deployment capabilities</li>
+                            <li>Partnered with security and compliance teams to establish security scanning pipelines with Trivy and Snyk, secrets management with HashiCorp Vault, and FinOps practices using Kubecost for cost visibility</li>
+                            <li>Optimized infrastructure spend by 20% ($250K+ annually) through t-shirt sizing methodology, Karpenter autoscaling, Spot instances adoption, and right-sizing resource allocation strategies</li>
+                            <li>Built self-service developer platform reducing ops tickets by 60% through automated provisioning and standardized tooling</li>
+                        </ul>
+                        <div class="job-tech">
+                            <strong>Platform & SRE:</strong> Kubernetes, Helm, ArgoCD, Terraform, Prometheus, Grafana, Loki, Jaeger, Istio
+                            <br>
+                            <strong>Backend:</strong> Go, Python, PostgreSQL, Redis, Kafka
+                            <br>
+                            <strong>Cloud:</strong> AWS-first (EKS, EC2, S3, RDS, Lambda) with Azure and GCP experience
+                            <br
+                            ><strong>Security & FinOps:</strong> HashiCorp Vault, Trivy, Snyk, Kubecost, Karpenter, Spot instances
+                        </div>
+                    </div>
+
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">DevOps Lead / Platform Engineer</div>
+                            <div class="job-period">2019-2021</div>
+                        </div>
+                        <div class="job-company">ScienceSoft</div>
+                        <ul>
+                            <li>Led cross-functional team of 12 engineers (backend, frontend, DevOps) designing real-time media streaming platform for news industry handling 10,000+ RPS with GPU-accelerated live video transcoding</li>
+                            <li>Architected secure content delivery system with private VPC to DMZ transition and content consistency verification algorithms across distributed storage</li>
+                            <li>Led migration from monolithic infrastructure to containerized microservices, reducing deployment time by 80% while maintaining full-stack visibility from frontend to data layer</li>
+                            <li>Implemented CI/CD pipelines with Jenkins and GitLab CI, establishing IaC practices managing 100+ cloud resources</li>
+                        </ul>
+                        <div class="job-tech">
+                            <strong>Infrastructure:</strong> Docker, Kubernetes, Terraform, Ansible, Nginx, HAProxy, Linkerd
+                            <br>
+                            <strong>CI/CD:</strong> Jenkins, GitLab CI, Bash scripting
+                            <br>
+                            <strong>Monitoring:</strong> Prometheus, Grafana, ELK Stack
+                            <br>
+                            <strong>Cloud:</strong> AWS (EC2, ECS, CloudFront, RDS)
+                        </div>
+                    </div>
+
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">DevOps / Backend Engineer</div>
+                            <div class="job-period">2013-2019</div>
+                        </div>
+                        <div class="job-company">Various Projects</div>
+                        <p>Full-stack development and DevOps across backend, frontend, and infrastructure. Built ETL pipelines processing 1M+ records/day, monitoring systems for 200+ services, and HIPAA-compliant infrastructure with Docker, Python, and Elasticsearch.</p>
+                        <div class="job-tech"><strong>Tech:</strong> Python, PHP, Docker, Jenkins, Elasticsearch, RabbitMQ, Redis, MySQL, PostgreSQL, Ansible</div>
+                    </div>
+                </section>
+
+                <section id="skills">
+                    <h2>Technical Expertise</h2>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h4>Platform Architecture & Cloud</h4>
+                            <div class="skill-tags">AWS-first architectures (EKS, Lambda, S3, RDS) · Azure & GCP experience · Multi-cluster Kubernetes · Hybrid cloud & air-gapped solutions · Infrastructure as Code · Service mesh architecture · SOC2 & GDPR compliance</div>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Platform Engineering & DevOps</h4>
+                            <div class="skill-tags">Kubernetes · Docker · Helm · Terraform · Ansible · GitOps · ArgoCD · CI/CD pipelines · Service mesh (Istio, Linkerd) · Developer platforms · Self-service tooling</div>
+                        </div>
+                        <div class="skill-category">
+                            <h4>SRE & Observability</h4>
+                            <div class="skill-tags">SLI/SLO/SLA frameworks · Error budgets · Incident management · Prometheus · Grafana · Loki · Jaeger · Distributed tracing · Chaos engineering · Disaster recovery</div>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Architecture Patterns & Practices</h4>
+                            <div class="skill-tags">GitOps · Policy as Code · Infrastructure as Code · Event-driven architecture · Microservices patterns · Cloud-native design · Zero-trust security</div>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Security & FinOps</h4>
+                            <div class="skill-tags">HashiCorp Vault · Trivy · Snyk · Container security · Secrets management · Kubecost · Karpenter · AWS Spot instances · Cost optimization · Resource rightsizing</div>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Languages & Data</h4>
+                            <div class="skill-tags">Go · Python · Bash · YAML · HCL · PostgreSQL · Redis · Kafka · RabbitMQ · Elasticsearch</div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <div class="contact-qr" aria-label="QR code with contact details">
+                        <img src="contact_qr.png" alt="Scan to download contact information">
+                        <div class="contact-qr-caption">Contact card</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value"><span>evgeny.padniuk</span><span style="display:none">noreply</span><span>+work</span><span>@</span><span>gmail</span><span>.</span><span>com</span></div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-label">LinkedIn</div>
+                            <a href="https://www.linkedin.com/in/yauheni-padniuk-05536846/" class="contact-link">linkedin.com/in/yauheni-padniuk</a>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-label">Certifications</div>
+                            <a href="https://credly.com/users/yauheni-padniuk" class="contact-link">credly.com/users/yauheni-padniuk</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Education</h3>
+                    <p><strong>Belarusian State University</strong><br>
+                    B.S. Technical Informatics (2009-2014)<br>
+                    Computer Science & Software Engineering</p>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Languages</h3>
+                    <div class="languages-list">
+                        <p><strong>English</strong><br>Upper-Intermediate</p>
+                        <p><strong>Polish</strong><br>Upper-Intermediate</p>
+                        <p><strong>Russian</strong><br>Native Speaker</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-section interests-section">
+                    <h3>Interests</h3>
+                    <p>
+                        <strong>Marathon Running</strong> - Participant in running events (21k-42k)<br><br>
+                        <strong>Culinary Arts</strong> - Chocolatier and home chef specializing in desserts<br><br>
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // PDF export functionality
+        const printBtn = document.getElementById('printBtn');
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+    </script>
+</body>
+</html>
