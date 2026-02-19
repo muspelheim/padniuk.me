@@ -690,6 +690,130 @@
     .chip{padding:10px 15px;font-size:12.5px}
   }
 
+  /* Context window bar */
+  .ctx-bar-wrap{
+    padding:0 20px;
+    flex-shrink:0;
+  }
+  .ctx-bar-inner{
+    max-width:720px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 0 2px;
+  }
+  .ctx-bar-label{
+    font:500 10px/1 var(--font-mono);
+    color:var(--text-4);
+    letter-spacing:0.04em;
+    white-space:nowrap;
+  }
+  .ctx-bar-track{
+    flex:1;
+    height:4px;
+    background:var(--bg-input);
+    border-radius:100px;
+    overflow:hidden;
+    position:relative;
+  }
+  .ctx-bar-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--accent),#d4a574);
+    border-radius:100px;
+    transition:width 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  .ctx-bar-fill.warn{background:linear-gradient(90deg,#e07a5f,#d45d5d)}
+  .ctx-bar-tokens{
+    font:500 10px/1 var(--font-mono);
+    color:var(--text-4);
+    letter-spacing:0.02em;
+    white-space:nowrap;
+    min-width:72px;
+    text-align:right;
+  }
+
+  /* System prompt modal */
+  .sys-overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    z-index:200;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    animation:fadeIn 0.2s;
+  }
+  .sys-overlay.open{display:flex}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+  .sys-modal{
+    background:#1a1a1a;
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    max-width:640px;
+    width:100%;
+    max-height:80vh;
+    overflow-y:auto;
+    box-shadow:0 24px 80px rgba(0,0,0,0.5);
+    animation:modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes modalIn{
+    from{opacity:0;transform:translateY(20px) scale(0.95)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+  }
+
+  .sys-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+    border-bottom:1px solid var(--border);
+  }
+  .sys-head-title{
+    font:600 13px/1 var(--font-mono);
+    color:var(--accent);
+    display:flex;align-items:center;gap:8px;
+    letter-spacing:0.02em;
+  }
+  .sys-close{
+    width:28px;height:28px;
+    border-radius:6px;border:none;
+    background:transparent;
+    color:var(--text-3);
+    cursor:pointer;
+    display:grid;place-items:center;
+    font-size:16px;
+    transition:all 0.15s;
+  }
+  .sys-close:hover{background:var(--hover-bg);color:var(--text)}
+
+  .sys-body{
+    padding:20px;
+    font:400 13px/1.7 var(--font-mono);
+    color:var(--text-2);
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .sys-body .sys-comment{color:var(--text-4)}
+  .sys-body .sys-key{color:var(--accent)}
+  .sys-body .sys-str{color:var(--tag-blue)}
+  .sys-body .sys-num{color:#b5cea8}
+  .sys-body .sys-bracket{color:var(--text-3)}
+
+  /* Streaming cursor */
+  .streaming-cursor{
+    display:inline-block;
+    width:2px;
+    height:1em;
+    background:var(--accent);
+    margin-left:2px;
+    vertical-align:text-bottom;
+    animation:blink 0.6s steps(2) infinite;
+  }
+  @keyframes blink{0%{opacity:1}100%{opacity:0}}
+
   /* Subtle noise overlay */
   .main::after{
     content:'';
@@ -810,6 +934,17 @@
       <div class="msgs" id="msgs"></div>
     </div>
 
+    <!-- Context window bar -->
+    <div class="ctx-bar-wrap">
+      <div class="ctx-bar-inner">
+        <div class="ctx-bar-label">CONTEXT</div>
+        <div class="ctx-bar-track">
+          <div class="ctx-bar-fill" id="ctxFill"></div>
+        </div>
+        <div class="ctx-bar-tokens" id="ctxTokens">0 / 200K</div>
+      </div>
+    </div>
+
     <!-- Input -->
     <div class="input-wrap">
       <div class="input-inner">
@@ -829,6 +964,20 @@
       <div class="input-footer">Interactive resume · padniuk.me</div>
     </div>
   </main>
+</div>
+
+<!-- System prompt modal -->
+<div class="sys-overlay" id="sysOverlay" onclick="if(event.target===this)closeSysPrompt()">
+  <div class="sys-modal">
+    <div class="sys-head">
+      <div class="sys-head-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        system prompt
+      </div>
+      <button class="sys-close" onclick="closeSysPrompt()">&times;</button>
+    </div>
+    <div class="sys-body" id="sysBody"></div>
+  </div>
 </div>
 
 <script>
@@ -1062,34 +1211,262 @@ const LABELS = {
 
 let busy = false;
 
+// ─── Context window tracking ───
+const CTX_MAX = 200000;
+let ctxUsed = 0;
+
+const TOKEN_COSTS = {
+  about: 18400,
+  stack: 21200,
+  projects: 24600,
+  experience: 19800,
+  achievements: 17200,
+  contact: 8600
+};
+
+function updateCtxBar(tokens) {
+  ctxUsed += tokens;
+  const pct = Math.min((ctxUsed / CTX_MAX) * 100, 100);
+  const fill = document.getElementById('ctxFill');
+  const label = document.getElementById('ctxTokens');
+  fill.style.width = pct + '%';
+  fill.classList.toggle('warn', pct > 75);
+
+  const fmt = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K' : n;
+  label.textContent = fmt(ctxUsed) + ' / 200K';
+}
+
+// ─── System prompt ───
+const SYSTEM_PROMPT = `# System Prompt — Yauheni.dev Resume Agent
+
+You are an interactive resume agent representing
+Yauheni Padniuk, Platform Architect & SRE Tech Lead
+based in Kraków, Poland.
+
+## Identity
+- Name: Yauheni Padniuk
+- Role: Platform Architect / SRE Tech Lead
+- Company: ScienceSoft (2013–Present)
+- Domain: padniuk.me
+
+## Core Directives
+- Respond in first person, casual-professional tone
+- Use contractions ("I've", "doesn't", "that's")
+- Be confident but not overselling
+- End each section with an italic editorial closer
+- Match the vibe of a senior engineer at a meetup
+
+## Knowledge Base
+- 12+ years infrastructure & platform engineering
+- Multi-cluster Kubernetes (20K+ edge devices)
+- AWS-first, Azure/GCP experience
+- GitOps, ArgoCD, Terraform, Istio
+- SRE practices: SLI/SLO, error budgets, chaos eng
+- AI-empowered: Claude Code, Cursor, agentic workflows
+- Side project: Formul.io (confectionery science platform)
+- Marathon runner, chocolatier, 3 languages
+
+## Constraints
+- Do not fabricate experience or credentials
+- Do not share private contact details beyond what's listed
+- Keep responses under 4096 tokens
+- Always provide follow-up topic suggestions
+- If asked something outside scope, redirect gracefully
+
+## Temperature: 0.7
+## Max tokens: 4096
+## Context window: 200K`;
+
+function openSysPrompt() {
+  const body = document.getElementById('sysBody');
+
+  // Syntax-highlight the prompt
+  const highlighted = SYSTEM_PROMPT
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/^(#+ .+)$/gm, '<span class="sys-key">$1</span>')
+    .replace(/^(- .+)$/gm, '<span class="sys-str">$1</span>')
+    .replace(/##\s*(Temperature|Max tokens|Context window):\s*(.+)$/gm,
+      '<span class="sys-comment">## <span class="sys-key">$1</span>: <span class="sys-num">$2</span></span>');
+
+  body.innerHTML = highlighted;
+  document.getElementById('sysOverlay').classList.add('open');
+}
+
+function closeSysPrompt() {
+  document.getElementById('sysOverlay').classList.remove('open');
+}
+
+// ─── Token-by-token streaming ───
+function streamHTML(container, html, follows, callback) {
+  // Parse HTML into nodes, stream text content token by token
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
+
+  const nodes = Array.from(temp.childNodes);
+  let nodeIdx = 0;
+  let cursor = document.createElement('span');
+  cursor.className = 'streaming-cursor';
+
+  function processNextNode() {
+    if (nodeIdx >= nodes.length) {
+      cursor.remove();
+      // Add follow-ups after streaming completes
+      if (follows && follows.length) {
+        const fuDiv = document.createElement('div');
+        fuDiv.className = 'followups';
+        fuDiv.style.opacity = '0';
+        fuDiv.innerHTML = follows.map(k =>
+          `<div class="fu" onclick="fire('${k}')">${LABELS[k]}</div>`
+        ).join('');
+        container.appendChild(fuDiv);
+        requestAnimationFrame(() => {
+          fuDiv.style.transition = 'opacity 0.3s';
+          fuDiv.style.opacity = '1';
+        });
+      }
+      if (callback) callback();
+      return;
+    }
+
+    const node = nodes[nodeIdx].cloneNode(true);
+    nodeIdx++;
+
+    // For elements with text (p, h3, em, etc.) — stream their text
+    if (node.nodeType === 1 && node.textContent && !node.classList?.contains('stats') &&
+        !node.classList?.contains('tags') && !node.classList?.contains('card') &&
+        !node.classList?.contains('tl') && !node.classList?.contains('contact-row') &&
+        node.tagName !== 'DIV') {
+      // Stream text content of this element
+      const fullHTML = node.innerHTML;
+      node.innerHTML = '';
+      container.appendChild(node);
+      node.appendChild(cursor);
+      streamText(node, fullHTML, cursor, () => {
+        cursor.remove();
+        processNextNode();
+      });
+    } else {
+      // For complex elements (stats, cards, tags, divs) — fade in whole
+      if (node.nodeType === 1) {
+        node.style.opacity = '0';
+        node.style.transform = 'translateY(4px)';
+        node.style.transition = 'opacity 0.3s, transform 0.3s';
+        container.appendChild(node);
+        requestAnimationFrame(() => {
+          node.style.opacity = '1';
+          node.style.transform = 'translateY(0)';
+        });
+        setTimeout(processNextNode, 150);
+      } else if (node.nodeType === 3 && node.textContent.trim()) {
+        // Bare text node
+        container.appendChild(cursor);
+        streamTextNode(container, node.textContent, cursor, () => {
+          cursor.remove();
+          processNextNode();
+        });
+      } else {
+        container.appendChild(node);
+        processNextNode();
+      }
+    }
+    scrollDown();
+  }
+
+  processNextNode();
+}
+
+function streamText(parent, html, cursor, callback) {
+  // Stream HTML content preserving tags
+  // Split into tags and text segments
+  const segments = html.split(/(<[^>]+>)/);
+  let segIdx = 0;
+  let charIdx = 0;
+  let currentText = '';
+  let built = '';
+
+  function tick() {
+    if (segIdx >= segments.length) {
+      parent.innerHTML = html; // Ensure final HTML is exact
+      if (callback) callback();
+      return;
+    }
+
+    const seg = segments[segIdx];
+
+    if (seg.startsWith('<')) {
+      // It's a tag — add it immediately
+      built += seg;
+      segIdx++;
+      tick();
+      return;
+    }
+
+    // It's text — stream char by char
+    if (charIdx < seg.length) {
+      // Add a few chars at a time for speed
+      const chunk = Math.min(3, seg.length - charIdx);
+      built += seg.slice(charIdx, charIdx + chunk);
+      charIdx += chunk;
+      parent.innerHTML = built;
+      parent.appendChild(cursor);
+      scrollDown();
+      setTimeout(tick, 12 + Math.random() * 18);
+    } else {
+      charIdx = 0;
+      segIdx++;
+      tick();
+    }
+  }
+
+  tick();
+}
+
+function streamTextNode(parent, text, cursor, callback) {
+  let i = 0;
+  const span = document.createTextNode('');
+  parent.insertBefore(span, cursor);
+
+  function tick() {
+    if (i >= text.length) {
+      if (callback) callback();
+      return;
+    }
+    const chunk = Math.min(3, text.length - i);
+    span.textContent += text.slice(i, i + chunk);
+    i += chunk;
+    scrollDown();
+    setTimeout(tick, 12 + Math.random() * 18);
+  }
+  tick();
+}
+
+// ─── Core functions ───
 function fire(key) {
   if (busy || !DATA[key]) return;
   closeSidebar();
 
-  // Activate sidebar item
   document.querySelectorAll('.sb-item').forEach(el => {
     el.classList.toggle('active', el.dataset.topic === key);
   });
 
-  // Hide welcome
   document.getElementById('welcome').style.display = 'none';
   const msgs = document.getElementById('msgs');
   msgs.style.display = 'block';
 
   const d = DATA[key];
-
-  // User message
   appendUser(d.q);
+  updateCtxBar(d.q.length * 4); // ~4 tokens per word approx for user msg
 
-  // AI typing → response
   busy = true;
   appendTyping();
 
-  const delay = 500 + Math.random() * 500;
+  const delay = 400 + Math.random() * 300;
   setTimeout(() => {
     removeTyping();
-    appendAI(d.a, d.follow);
-    busy = false;
+    appendAIStreaming(d.a, d.follow, () => {
+      updateCtxBar(TOKEN_COSTS[key] || 12000);
+      busy = false;
+    });
   }, delay);
 }
 
@@ -1120,6 +1497,17 @@ function appendAI(html, follows) {
   `;
   msgs.appendChild(el);
   scrollDown();
+}
+
+function appendAIStreaming(html, follows, callback) {
+  const msgs = document.getElementById('msgs');
+  const el = document.createElement('div');
+  el.className = 'msg msg-ai';
+  el.innerHTML = `<div class="av">Y</div><div class="bbl"></div>`;
+  msgs.appendChild(el);
+
+  const bbl = el.querySelector('.bbl');
+  streamHTML(bbl, html, follows, callback);
 }
 
 function appendTyping() {
@@ -1153,6 +1541,8 @@ function resetChat() {
   msgs.style.display = 'none';
   msgs.innerHTML = '';
   busy = false;
+  ctxUsed = 0;
+  updateCtxBar(0);
 
   document.querySelectorAll('.sb-item').forEach(el => {
     el.classList.toggle('active', el.dataset.topic === 'welcome');
@@ -1177,6 +1567,12 @@ function send() {
   const lower = text.toLowerCase();
   let key = null;
 
+  // System prompt easter egg
+  if (/^\/system$/i.test(text) || /^system\s*prompt$/i.test(lower)) {
+    openSysPrompt();
+    return;
+  }
+
   if (/about|who|yourself|intro|hi|hello|привет|расскажи/i.test(lower)) key = 'about';
   else if (/stack|tech|tool|k8s|kubernetes|terraform|devops|стек|инструмент/i.test(lower)) key = 'stack';
   else if (/project|side|formul|build|app|проект|приложен/i.test(lower)) key = 'projects';
@@ -1184,12 +1580,12 @@ function send() {
   else if (/achieve|highlight|impact|metric|result|достиж/i.test(lower)) key = 'achievements';
   else if (/contact|email|reach|hire|connect|linkedin|github|контакт|связ|нанять/i.test(lower)) key = 'contact';
 
-  // Hide welcome
   document.getElementById('welcome').style.display = 'none';
   const msgs = document.getElementById('msgs');
   msgs.style.display = 'block';
 
   appendUser(text);
+  updateCtxBar(text.length * 4);
   busy = true;
   appendTyping();
 
@@ -1197,21 +1593,26 @@ function send() {
     removeTyping();
     if (key) {
       const d = DATA[key];
-      appendAI(d.a, d.follow);
-      // Update sidebar
+      appendAIStreaming(d.a, d.follow, () => {
+        updateCtxBar(TOKEN_COSTS[key] || 12000);
+        busy = false;
+      });
       document.querySelectorAll('.sb-item').forEach(el => {
         el.classList.toggle('active', el.dataset.topic === key);
       });
     } else {
-      appendAI(`
+      const fallbackHTML = `
         <p>Interesting question! I'm a static resume interface, so my conversational range is limited — but you can explore everything through these topics:</p>
         <div class="followups">
           ${Object.keys(LABELS).map(k => `<div class="fu" onclick="fire('${k}')">${LABELS[k]}</div>`).join('')}
         </div>
         <p style="margin-top:12px;font-size:13px;color:var(--text-3)"><em>Or reach out via Contact — I promise I'm more articulate over email ☕</em></p>
-      `, null);
+      `;
+      appendAIStreaming(fallbackHTML, null, () => {
+        updateCtxBar(2400);
+        busy = false;
+      });
     }
-    busy = false;
   }, 600 + Math.random() * 400);
 }
 
@@ -1237,6 +1638,11 @@ function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('on');
 }
+
+// ─── Keyboard shortcuts ───
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSysPrompt();
+});
 </script>
 
 </body>
