@@ -905,6 +905,149 @@
   }
   @keyframes blink{0%{opacity:1}100%{opacity:0}}
 
+  /* ─── Sponsored message (parody ChatGPT ad) ─── */
+  .msg-ad{
+    margin-bottom:28px;
+    animation:msgIn 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .ad-label{
+    font:500 10px/1 var(--font-mono);
+    color:var(--text-4);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:5px;
+    margin-bottom:8px;
+    padding-left:42px;
+  }
+
+  .ad-label-badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:14px;height:14px;
+    background:rgba(92,184,128,0.15);
+    color:#5cb880;
+    border-radius:3px;
+    font:700 9px/1 var(--font-mono);
+    flex-shrink:0;
+  }
+
+  .ad-inner{display:flex;gap:14px;align-items:flex-start}
+
+  .ad-av{
+    width:28px;height:28px;flex-shrink:0;margin-top:3px;
+    background:linear-gradient(145deg,#3b7fc4,#2960a0);
+    border-radius:var(--radius-sm);
+    display:grid;place-items:center;
+    font:700 9px/1 var(--font-mono);
+    color:#e8f4ff;
+    border:1px solid rgba(59,127,196,0.3);
+    letter-spacing:0.01em;
+  }
+
+  .ad-card{
+    flex:1;
+    background:rgba(59,127,196,0.06);
+    border:1px solid rgba(59,127,196,0.2);
+    border-radius:14px;
+    padding:16px 18px 14px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .ad-card::before{
+    content:'';
+    position:absolute;top:0;left:0;right:0;
+    height:2px;
+    background:linear-gradient(90deg,
+      transparent 0%,#3b7fc4 25%,#5cb880 50%,#3b7fc4 75%,transparent 100%);
+    background-size:200% 100%;
+    animation:adShimmer 4s linear infinite;
+  }
+
+  @keyframes adShimmer{
+    0%{background-position:200% 0}
+    100%{background-position:-200% 0}
+  }
+
+  .ad-brand{
+    display:flex;align-items:center;gap:8px;
+    margin-bottom:10px;
+  }
+
+  .ad-brand-icon{
+    width:22px;height:22px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:5px;
+    display:grid;place-items:center;
+    font-size:12px;
+    flex-shrink:0;
+  }
+
+  .ad-brand-name{
+    font:500 11px/1 var(--font-mono);
+    color:var(--text-4);
+    letter-spacing:0.02em;
+  }
+
+  .ad-dismiss{
+    position:absolute;top:8px;right:8px;
+    width:22px;height:22px;
+    border:none;background:transparent;
+    color:var(--text-4);cursor:pointer;
+    border-radius:4px;
+    display:grid;place-items:center;
+    font-size:14px;line-height:1;
+    transition:all 0.15s;
+  }
+
+  .ad-dismiss:hover{background:var(--hover-bg);color:var(--text)}
+
+  .ad-headline{
+    font:600 15px/1.3 var(--font-body);
+    color:var(--text);
+    margin-bottom:6px;
+    letter-spacing:-0.02em;
+    padding-right:20px;
+  }
+
+  .ad-desc{
+    font:400 13px/1.55 var(--font-body);
+    color:var(--text-2);
+    margin-bottom:14px;
+  }
+
+  .ad-footer{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:8px;
+  }
+
+  .ad-cta{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:8px 16px;
+    background:#3b7fc4;
+    color:#fff;
+    border-radius:8px;
+    font:600 12.5px/1 var(--font-body);
+    text-decoration:none;
+    transition:all 0.15s;
+    letter-spacing:-0.01em;
+  }
+
+  .ad-cta:hover{
+    background:#4a90d8;
+    border-color:transparent;
+    transform:translateY(-1px);
+    box-shadow:0 4px 14px rgba(59,127,196,0.35);
+  }
+
+  .ad-fine{
+    font:400 10px/1.4 var(--font-body);
+    color:var(--text-4);
+    font-style:italic;
+    max-width:260px;
+  }
+
   /* Subtle noise overlay */
   .main::after{
     content:'';
@@ -1353,6 +1496,38 @@ const LABELS = {
 
 let busy = false;
 
+// ─── Ad system (ChatGPT parody) ───
+let adMsgCount = 0;
+let adVariantIdx = 0;
+const AD_EVERY = 2; // show ad after every N responses
+
+const AD_VARIANTS = [
+  {
+    headline: "Classic Resume — No Context Window Required",
+    desc: "Experience the original stateless format. Loads once. Scales infinitely. 100% compatible with fax machines, email attachments, and human eyes.",
+    cta: "View Classic CV",
+    fine: "* Does not consume GPU tokens"
+  },
+  {
+    headline: "Reduce Infrastructure Costs. Switch to PDF.",
+    desc: "Our Classic CV serves the same Yauheni Padniuk with zero compute overhead, no streaming costs, and O(1) rendering complexity that would make any SRE proud.",
+    cta: "Deploy Classic Version →",
+    fine: "* SLA: 99.9% readability. Zero dependencies."
+  },
+  {
+    headline: "Before AI Ate Resumes, There Was HTML",
+    desc: "A single document. All the facts. No chips, no typing animation, no follow-up suggestions. Just credentials, arranged traditionally — the way HR professionals intended.",
+    cta: "Visit Classic Format",
+    fine: "* Also available in A4. Just hit Ctrl+P."
+  },
+  {
+    headline: "Ads? In MY Chat Interface? It's More Likely Than You Think.",
+    desc: "Yes, this is a real ad. For the version of this resume that doesn't have ads. Life comes at you fast. Click through before the next response triggers another one.",
+    cta: "Escape the Ads →",
+    fine: "* Clicking this funds zero AI inference. It's all static anyway."
+  }
+];
+
 // ─── Context window tracking ───
 const CTX_MAX = 128000;
 let ctxUsed = 0;
@@ -1662,6 +1837,7 @@ function fire(key) {
     appendAIStreaming(d.a, d.follow, () => {
       updateCtxBar(TOKEN_COSTS[key] || 12000);
       busy = false;
+      maybeShowAd();
     });
   }, delay);
 }
@@ -1724,6 +1900,50 @@ function removeTyping() {
   if (t) t.remove();
 }
 
+function maybeShowAd() {
+  adMsgCount++;
+  if (adMsgCount % AD_EVERY === 0) {
+    const v = AD_VARIANTS[adVariantIdx % AD_VARIANTS.length];
+    adVariantIdx++;
+    setTimeout(() => appendAd(v), 350);
+  }
+}
+
+function appendAd(v) {
+  const msgs = document.getElementById('msgs');
+  const el = document.createElement('div');
+  el.className = 'msg-ad';
+  const uid = 'ad-' + Date.now();
+  el.id = uid;
+  el.innerHTML = `
+    <div class="ad-label">
+      <span class="ad-label-badge">$</span>
+      Sponsored
+    </div>
+    <div class="ad-inner">
+      <div class="ad-av">PDF</div>
+      <div class="ad-card">
+        <button class="ad-dismiss" onclick="document.getElementById('${uid}').style.opacity='0';setTimeout(()=>document.getElementById('${uid}').remove(),200)" title="Dismiss">×</button>
+        <div class="ad-brand">
+          <div class="ad-brand-icon">📄</div>
+          <div class="ad-brand-name">classic.html · padniuk.me</div>
+        </div>
+        <div class="ad-headline">${v.headline}</div>
+        <div class="ad-desc">${v.desc}</div>
+        <div class="ad-footer">
+          <a href="classic.html" class="ad-cta">
+            ${v.cta}
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <div class="ad-fine">${v.fine}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  msgs.appendChild(el);
+  scrollDown();
+}
+
 function scrollDown() {
   const chat = document.getElementById('chat');
   requestAnimationFrame(() => {
@@ -1739,6 +1959,8 @@ function resetChat() {
   busy = false;
   ctxUsed = 0;
   ctxOverflowFired = false;
+  adMsgCount = 0;
+  adVariantIdx = 0;
   updateCtxBar(0);
 
   document.querySelectorAll('.sb-item').forEach(el => {
@@ -1793,6 +2015,7 @@ function send() {
       appendAIStreaming(d.a, d.follow, () => {
         updateCtxBar(TOKEN_COSTS[key] || 12000);
         busy = false;
+        maybeShowAd();
       });
       document.querySelectorAll('.sb-item').forEach(el => {
         el.classList.toggle('active', el.dataset.topic === key);
@@ -1808,6 +2031,7 @@ function send() {
       appendAIStreaming(fallbackHTML, null, () => {
         updateCtxBar(2400);
         busy = false;
+        maybeShowAd();
       });
     }
   }, 600 + Math.random() * 400);
