@@ -130,15 +130,15 @@
             padding-bottom: 0.5rem;
         }
 
-        #leadership-highlights {
+        #ai-highlights {
             margin-bottom: 2.5rem;
         }
 
-        #leadership-highlights ul {
+        #ai-highlights ul {
             margin-left: 1.5rem;
         }
 
-        #leadership-highlights li {
+        #ai-highlights li {
             margin-bottom: 0.85rem;
             line-height: 1.8;
         }
@@ -616,7 +616,17 @@
                 margin: 0 0 0.25rem 0 !important;
                 padding: 0 0 0.2rem 0 !important;
                 border-bottom: 0.5pt solid #ddd;
+                page-break-inside: auto !important;
+            }
+
+            .job-header,
+            .job li {
                 page-break-inside: avoid !important;
+            }
+
+            .job-header,
+            .job-company {
+                page-break-after: avoid !important;
             }
 
             .job:last-child {
@@ -764,11 +774,11 @@
                 page-break-before: avoid;
             }
 
-            #leadership-highlights ul {
+            #ai-highlights ul {
                 margin-left: 0.7rem !important;
             }
 
-            #leadership-highlights li {
+            #ai-highlights li {
                 margin-bottom: 0.08rem !important;
                 line-height: 1.3 !important;
             }
